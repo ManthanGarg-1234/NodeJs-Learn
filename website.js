@@ -1,6 +1,6 @@
 const { Console } = require("console");
 const http = require("http");
-
+const fs = require("fs");
 const port = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
@@ -15,8 +15,12 @@ const server = http.createServer((req, res) => {
     res.statusCode = 200;
 
     res.end("<h1>this is about</h1>");
+  } else if (req.url == "/hello") {
+    res.statusCode = 200;
+    const data = fs.readFileSync("index.html");
+    res.end(data.toString());
   } else {
-    // res.harry() this line is added just to crash the server if user goes on a undefined url
+    // res.harry() this line is added just to crash the server if user goes on a undefined
     res.statusCode = 404;
     res.end("<h1>default page</h1>");
   }
